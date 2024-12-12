@@ -9,6 +9,7 @@ import org.Sebastian.quarkus.test.model.ErrorResponse;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.logging.Logger;
 
 @ApplicationScoped
 @Path("peso-to-dolar")
@@ -52,18 +53,24 @@ public class PesoToDolarResource {
     public Response updateDolarConvertion(@PathParam("dolar") BigDecimal dolar) {
 
         try {
-            if(dolar.compareTo(BigDecimal.ZERO) < 0 || BigDecimal.ZERO.equals(dolar)){
-                return Response
-                .status(Status.BAD_REQUEST)
-                .entity(new ErrorResponse(400,"bad-request", "Dolar value must be greater than 0"))
-                .build();
+            int[] myArray = new int[]{1, 2, 3};
+            int total =myArray[0];
+            for (int i=1; i< 3; i++){
+                total= total * myArray[i];
             }
-            dolarConvertion = dolar;
+            return Response .ok().entity(total).build();
+            // if(dolar.compareTo(BigDecimal.ZERO) < 0 || BigDecimal.ZERO.equals(dolar)){
+            //     return Response
+            //     .status(Status.BAD_REQUEST)
+            //     .entity(new ErrorResponse(400,"bad-request", "Dolar value must be greater than 0"))
+            //     .build();
+            // }
+            // dolarConvertion = dolar;
 
-            return Response
-            .ok()
-            .entity("Dolar convertion updated to:" + dolarConvertion)
-            .build();
+            // return Response
+            // .ok()
+            // .entity("Dolar convertion updated to:" + dolarConvertion)
+            // .build();
         } catch (Exception e) {
             return Response.status(Status.INTERNAL_SERVER_ERROR)
             .entity(new ErrorResponse(500, "not-found", e.getMessage()))

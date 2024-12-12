@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: peso-to-dolar
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      role: peso-to-dolar
+  template:
+    metadata:
+      labels:
+        role: peso-to-dolar
+    spec:
+      containers:
+      - name: peso-to-dolar-conversion
+        image: seba9988/cursodockerkubernetes:api-rest-peso-convertion-jvm
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: peso-to-dolar-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8085
+    targetPort: 8080
+  selector:
+    role: peso-to-dolar
